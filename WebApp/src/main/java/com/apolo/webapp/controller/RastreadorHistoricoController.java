@@ -85,7 +85,7 @@ public class RastreadorHistoricoController implements Serializable{
     }
 
     public LineChartModel getLineModelGeracao() {
-        listaRastreadorHistorico = rastreadorHistoricoEJB.buscarHistorico(dataInicial, dataFinal);
+        listaRastreadorHistorico = rastreadorHistoricoEJB.buscarHistorico(dataInicial, dataFinal, idRastreador);
         if(lineModelGeracao != null)
             lineModelGeracao.clear();
         lineModelGeracao = initGeracaoModel();

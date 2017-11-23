@@ -29,7 +29,6 @@
                    <p:poll interval="3" update="chart" /> 
                    <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:500px;height:300px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
                 </div>  
-                     <p:commandButton id="btnTeste" actionListener="#{RastreadorHistoricoController.gerarRelatorio()}" />
                 </h:form>
 
             </ui:define>

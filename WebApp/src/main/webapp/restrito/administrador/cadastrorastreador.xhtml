@@ -18,20 +18,20 @@
                                 <h:panelGrid columns="3" id="pgDados">
 
                                     <p:outputLabel for="txtNome" value="Nome"/>
-                                    <p:inputText id="txtNome" value="#{RastreadoController.rastreador.nome}" required="true" />
+                                    <p:inputText id="txtNome" value="#{RastreadorController.rastreador.nome}" required="true" />
                                     <p:message for="txtNome"/>
 
                                     <p:outputLabel for="txtX" value="Latitute"/>
-                                    <p:inputText id="txtX" value="#{RastreadoController.rastreador.x}" required="true" />
+                                    <p:inputText id="txtX" value="#{RastreadorController.rastreador.x}" required="true" />
                                     <p:message for="txtX"/>
                                     <p:outputLabel for="txtY" value="Longitute"/>
-                                    <p:inputText id="txtY" value="#{RastreadoController.rastreador.y}" required="true" />
+                                    <p:inputText id="txtY" value="#{RastreadorController.rastreador.y}" required="true" />
                                     <p:message for="txtY"/>
                                     <p:outputLabel for="txtPotenteciaPaineis" value="Potência Painéis"/>
-                                    <p:inputText id="txtPotenteciaPaineis" value="#{RastreadoController.rastreador.potenciapaineis}" required="true" />
+                                    <p:inputText id="txtPotenteciaPaineis" value="#{RastreadorController.rastreador.potenciapaineis}" required="true" />
                                     <p:message for="txtPotenteciaPaineis"/>
                                 </h:panelGrid>
-                                <p:commandButton icon="ui-icon-check" value="Cadastrar" update="pgDados, mensagem" actionListener="#{RastreadoController.registrar()}"/>
+                                <p:commandButton icon="ui-icon-check" value="Cadastrar" update="pgDados, mensagem" actionListener="#{RastreadorController.registrar()}"/>
                             </p:fieldset>
                         </h:form>
                         <h:outputScript library="js" name="portuguesBRLocale.js" />

@@ -1,6 +1,7 @@
 package com.apolo.webapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Rastreador implements Serializable{
     private double potenciapaineis;  
 
     @ManyToMany(mappedBy="rastreadores")
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<Usuario>();
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;

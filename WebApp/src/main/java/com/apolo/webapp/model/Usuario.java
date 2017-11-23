@@ -3,6 +3,7 @@ package com.apolo.webapp.model;
 import com.apolo.webapp.ejb.SQLInjectionSafe;
 import com.apolo.webapp.util.Criptografia;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -39,14 +41,14 @@ public class Usuario implements Serializable{
     @Column(name="tipo", nullable=false)
     private String tipo;
     
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.ALL})
     @JoinTable(name="usuariorastreador",
         joinColumns=
             @JoinColumn(name="idusuario", referencedColumnName="id"),
         inverseJoinColumns=
             @JoinColumn(name="idrastreador", referencedColumnName="idrastreador")
         )
-    public List<Rastreador> rastreadores;
+    public List<Rastreador> rastreadores = new ArrayList<Rastreador>();
     
     public List<Rastreador> getRastreadores() { return rastreadores; }
 
