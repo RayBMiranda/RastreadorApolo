@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +37,7 @@ public class Rastreador implements Serializable{
     @Column(name="potenciapaineis")
     private double potenciapaineis;  
 
-    @ManyToMany(mappedBy="rastreadores")
+    @ManyToMany(mappedBy="rastreadores", fetch=FetchType.EAGER)
     private List<Usuario> usuarios = new ArrayList<Usuario>();
 
     public void setUsuarios(List<Usuario> usuarios) {

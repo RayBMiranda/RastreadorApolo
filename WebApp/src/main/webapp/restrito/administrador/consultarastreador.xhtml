@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="frmRastreador">  
+
+                    <p:growl id="growl" autoUpdate="true" showDetail="true"/>    
+
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Pesquisar"  icon="ui-icon-search" update="frmRastreador" actionListener="#{PesquisaRastreadorController.pesquisar()}"/>
+                        </f:facet>
+                        <f:facet name="right">
+                            <p:button value="Novo"  icon="ui-icon-disk" outcome="cadastrorastreador.apolo" />
+                        </f:facet>
+                    </p:toolbar>
+
+                    <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+                        <p:outputLabel value="Codigo" for="codigo"/>
+                        <p:inputText id="codigo" size="10"/>
+
+                        <p:outputLabel value="Nome" for="nome"/>
+                        <p:inputText id="nome" size="60"/>
+                    </p:panelGrid>                
+
+                    <p:dataTable id="rastreadoresTable" value="#{PesquisaRastreadorController.rastreadoresFiltrados}" var="rastreador"
+                                 paginator="true"
+                                 paginatorAlwaysVisible="false"
+                                 emptyMessage="Não foram encontrados rastreadores"
+                                 paginatorPosition="Bottom"
+                                 >
+                        <p:column style="width:50px;" headerText="ID">
+                            <f:facet name="header">
+                                <h:outputText value="#{rastreador.idrastreador}"/>
+                            </f:facet>
+                            <h:outputText value="#{rastreador.idrastreador}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{rastreador.nome}"/>
+                            </f:facet>
+                            <h:outputText value="#{rastreador.nome}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{rastreador.chave}"/>
+                            </f:facet>
+                            <h:outputText value="#{rastreador.chave}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{rastreador.x}"/>
+                            </f:facet>
+                            <h:outputText value="#{rastreador.x}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{rastreador.y}"/>
+                            </f:facet>
+                            <h:outputText value="#{rastreador.y}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{rastreador.potenciapaineis}"/>
+                            </f:facet>
+                            <h:outputText value="#{rastreador.potenciapaineis}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton id="btnAlterar" value="Editar" immediate="true" action="cadastrorastreador.apolo?faces-redirect=true" ajax="false" >
+                                <f:setPropertyActionListener target="#{RastreadorController.rastreador}" value="#{rastreador}" />
+                            </p:commandButton>
+                            <p:commandButton icon="ui-icon-trash" title="Excluir" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>                           
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

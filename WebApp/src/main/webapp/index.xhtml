@@ -15,10 +15,10 @@
                 <h:panelGrid columns="2">
                     <p:outputLabel for="txtEmail" value="Email"/>
                     <p:inputText id="txtEmail" value="#{IndexController.usuario.email}" 
-                               required="true" requiredMessage="Campo requerido"
-                               validatorMessage="Email com Formato Invalido">
-                            <f:validateRegex pattern=
-                                             "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                 required="true" requiredMessage="Campo requerido"
+                                 validatorMessage="Email com Formato Invalido">
+                        <f:validateRegex pattern=
+                                         "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                     </p:inputText> 
                     <p:outputLabel for="txtSenha" value="Senha"/>
                     <p:password id="txtSenha" value="#{IndexController.usuario.senha}" required="true" />
@@ -29,6 +29,12 @@
                 <!--<p:link value="Criar Conta" outcome="usuario"/>-->
             </h:form>
         </div>    
+        <br />
     </h:body>
+
+
+
+
+
 </html>
 

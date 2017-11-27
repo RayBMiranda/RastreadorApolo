@@ -1,4 +1,3 @@
-
 #top {
     position: relative;
     color: white;
@@ -29,7 +28,6 @@
 
 .center_content {
     position: relative;
-    background-color: #dddddd;
     padding: 5px;
 }
 
@@ -46,7 +44,7 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
+  color: #2E6E9E;
   font-weight : bold;
   text-decoration: none;
 }

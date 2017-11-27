@@ -13,8 +13,16 @@
             <ui:define name="content">
                        <h:form>
                             <p:messages id="mensagem" autoUpdate="false" severity="info, fatal" closable="true" showDetail="true" />
-
-                            <p:fieldset legend="Dados Pessoais">
+                            <p:toolbar>
+                                <f:facet name="left">
+                                    <p:commandButton value="Novo" icon="ui-icon-document" process="@none" update="pgDados" actionListener="#{UsuarioController.limpar()}"/>
+                                    <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{UsuarioController.registrar()}" update="pgDados"/>
+                                </f:facet>
+                                <f:facet name="right">
+                                    <p:button value="Pesquisa" icon="ui-icon-search" outcome="consultausuario.apolo" />
+                                </f:facet>
+                            </p:toolbar>
+                            <p:fieldset legend="Dados Pessoais" style="margin-top: 20px;">
                                 <h:panelGrid columns="3" id="pgDados">
 
                                     <p:outputLabel for="txtNome" value="Nome"/>

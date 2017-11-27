@@ -38,7 +38,7 @@ public class RastreadorHistoricoFacade extends AbstractFacade<RastreadorHistoric
         List<RastreadorHistorico> lista = null;
         String consulta;
         try {
-            consulta = "From RastreadorHistorico rh WHERE rh.dataHora between ?1 and ?2 and rh.idRastreado.idrastreador = ?3";  
+            consulta = "From RastreadorHistorico rh WHERE rh.dataHora between ?1 and ?2 and rh.idRastreador.idrastreador = ?3";  
             Query query = em.createQuery(consulta);
             query.setParameter(1, dataInicial, TemporalType.DATE);
             query.setParameter(2, dataFinal, TemporalType.DATE);

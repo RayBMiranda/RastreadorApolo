@@ -9,6 +9,7 @@
     <class>com.apolo.rastreadorsolar.model.RastreadorHistorico</class>
     <class>com.apolo.rastreadorsolar.model.TipoLog</class>
     <class>com.apolo.rastreadorsolar.model.Usuario</class>
+    	
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
         <property name="javax.persistence.schema-generation.database.action" value="create"/>

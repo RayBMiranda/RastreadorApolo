@@ -10,44 +10,88 @@
         <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
 
             <ui:define name="content">
-                <p:growl autoUpdate="true" showDetail="true"/>
                 <h:form id="frmPrincipal">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Pesquisar"  icon="ui-icon-search" update="tabela" actionListener="#{PesquisaUsuarioController.pesquisar()}" />
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:button value="Novo"  icon="ui-icon-document" outcome="cadastrousuario.apolo" />
+                    </p:toolbarGroup>
+                </p:toolbar>
+                
+                <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+                    <p:outputLabel value="Codigo" for="codigo"/>
+                    <p:inputText id="codigo" size="10"/>
+                    
+                    <p:outputLabel value="Nome" for="nome"/>
+                    <p:inputText id="nome" size="80"/>
+                </p:panelGrid>                
                     <h1>Usuários</h1>
-                   <p:dataTable id="tabela" emptyMessage="Nenhum usuário registrado" value="#{UsuarioController.usuarios}" var="usu" editable="true" >
+                    <p:dataTable id="tabela" emptyMessage="Nenhum usuário registrado" value="#{PesquisaUsuarioController.usuariosFiltrados}" var="usu" editable="true" >
+                       <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
                        <p:column headerText="Email" filterBy="#{usu.email}" filterStyle="max-width: 250px; min-width: 250px;" filterMatchMode="contains">
-                           <h:outputText value="#{usu.email}"/>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{usu.email}"/>
+                                </f:facet>
+
+                                <f:facet name="input">
+                                    <p:inputText value="#{usu.email}" />
+                                </f:facet>
+                            </p:cellEditor>
                        </p:column>
+                       <p:ajax event="rowEdit" listener="#{UsuarioController.editar(usu)}" />
                        <p:column headerText="Nome" filterBy="#{usu.id.nome} #{usu.id.sobrenome}" filterStyle="max-width: 250px; min-width: 250px;" filterMatchMode="contains">
                            <h:outputText value="#{usu.id.nome} #{usu.id.sobrenome}"/>
                        </p:column>
-                       <p:column headerText="Rastreadores" style="text-align: center;width: 122px;">
-                           <p:commandButton value="Cadastrar"  oncomplete="PF('wdialogoRastreador').show()" actionListener="#{UsuarioController.ler(usu)}"/>
-                       </p:column>
                        <p:column style="width:42px">                  
-                           <p:commandButton icon="ui-icon-pencil" action="#{UsuarioController.ler(usu)}" actionListener="#{UsuarioController.exibirDialogo()}" update="dialogo"/>
+                           <p:commandButton value="Editar" ajax="false" oncomplete="PF('wdialogo').show();" update=":dialogo" actionListener="#{PesquisaUsuarioController.exibirDialogo()}">
+                               <f:setPropertyActionListener value="#{usu}" target="#{PesquisaUsuarioController.usuarioSelecionado}" />
+                           </p:commandButton>
                        </p:column>
                     </p:dataTable>
                 </h:form>
-                <p:dialog id="dialogo" widgetVar="wdialogo" header="Editar Usuario" modal="true" resizable="false" draggable="false" closeOnEscape="true">
+                <p:dialog id="dialogo" style="width: 80%;" widgetVar="wdialogo" header="Editar Usuario"  modal="true" resizable="false" draggable="false" closeOnEscape="true">
                     <h:form id="frmDialogo">
-                        <h:panelGrid columns="2">
-                            <p:outputLabel for="txtEmail" value="Email"/>
-                            <p:inputText id="txtEmail" required="true" value="#{UsuarioController.usuario.email}"/>
-                            <p:commandButton value="Editar" icon="ui-icon-check" update=":frmPrincipal:tabela" actionListener="#{UsuarioController.editar(UsuarioController.usuario)}" oncomplete="PF('wdialogo').hide();" />
-                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
-                        </h:panelGrid>
-                    </h:form>
-                </p:dialog>
-                <p:dialog id="dialogoRastreador" widgetVar="wdialogoRastreador" header="Cadastrar Rastreador" modal="true" resizable="false" draggable="false" closeOnEscape="true">
-                        <h:form id="frmDialogoRastreador">
-                            <h:panelGrid columns="3">
-                                <p:outputLabel value="Rastreador" />
-                                 <p:selectOneListbox id="basic" value="#{RastreadorController.codigoRastreador}" filter="true" filterMatchMode="contains">
-                                    <f:selectItems value="#{RastreadorController.rastreadores}" var="ras" itemLabel="#{ras.idrastreador} - #{ras.nome}" itemValue="#{ras.idrastreador}" />
-                                </p:selectOneListbox>
-                                <p:commandButton icon="ui-icon-search" value="Cadastrar" actionListener="#{UsuarioController.adicionarRastreador()}" onclick="PF('wdialogoRastreador').hide();"/>
-                            </h:panelGrid>
-                        </h:form>
+                        <p:tabView  style="text-align: center; width: 700px;">
+                            <p:tab title="Cadastrar Rastreadores">
+                                <h:panelGrid columns="2" width="80%">
+                                    <p:outputLabel value="Rastreador" />
+                                    <p:selectOneListbox style="width: 100%; text-align: left;" id="basic" value="#{PesquisaUsuarioController.rastreadorSelecionado}" filter="true" filterMatchMode="contains">
+                                        <f:selectItems value="#{RastreadorController.rastreadores}" var="ras" itemLabel="#{ras.idrastreador} - #{ras.nome}" itemValue="#{ras}" />
+                                    </p:selectOneListbox>
+                                    <p:column />
+                                    <p:commandButton icon="ui-icon-search" value="Cadastrar" actionListener="#{PesquisaUsuarioController.adicionarRastreador()}" update="frmDialogo">
+                                        <f:setPropertyActionListener value="#{ras}" target="#{PesquisaUsuarioController.rastreadorSelecionado}" />
+                                    </p:commandButton>    
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Rastreadores Cadastrados">
+                                <p:dataTable emptyMessage="Não há rastreadores cadastrados." value="#{PesquisaUsuarioController.rastreadorSelecionado.rastreadores}" var="rast" style="width: 100%; padding: 0 auto;">
+                                    <p:column headerText="Id" width="10%">
+                                        <h:outputText value="#{rast.idrastreador}" />
+                                    </p:column>
+                                    <p:column headerText="Nome" width="40%">
+                                        <div style="text-align: left;">
+                                            <h:outputText value="#{rast.nome}" />
+                                        </div>
+                                    </p:column>
+                                    <p:column headerText="Chave" width="40%">
+                                        <h:outputText value="#{rast.chave}" />
+                                    </p:column>
+                                    <p:column headerText="" width="10%">
+                                        <h:commandButton value="Excluir" actionListener="#{PesquisaUsuarioController.removerRastreador()}" >
+                                            <f:setPropertyActionListener value="#{rast}" target="#{PesquisaUsuarioController.rastreadorSelecionado}"/>
+                                        </h:commandButton>
+                                    </p:column>
+                                </p:dataTable>  
+                            </p:tab>
+                        </p:tabView>
+                    </h:form>    
                 </p:dialog>
             </ui:define>
         </ui:composition>

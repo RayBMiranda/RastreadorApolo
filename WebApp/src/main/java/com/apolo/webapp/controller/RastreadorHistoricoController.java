@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.model.chart.Axis;
@@ -25,7 +26,7 @@ import org.primefaces.model.chart.LineChartModel;
  * @author raybm
  */
 @ManagedBean(name = "RastreadorHistoricoController")
-@ViewScoped
+@SessionScoped
 public class RastreadorHistoricoController implements Serializable{
     @EJB
     private RastreadorHistoricoFacadeLocal rastreadorHistoricoEJB;

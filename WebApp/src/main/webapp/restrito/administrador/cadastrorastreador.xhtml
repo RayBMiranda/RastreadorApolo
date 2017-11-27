@@ -5,39 +5,39 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
     <body>
-
         <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
-
             <ui:define name="content">
-                       <h:form>
-                            <p:messages id="mensagem" autoUpdate="false" severity="info, fatal" closable="true" showDetail="true" />
-
-                            <p:fieldset legend="Dados Rastreador">
-                                <h:panelGrid columns="3" id="pgDados">
-
-                                    <p:outputLabel for="txtNome" value="Nome"/>
-                                    <p:inputText id="txtNome" value="#{RastreadorController.rastreador.nome}" required="true" />
-                                    <p:message for="txtNome"/>
-
-                                    <p:outputLabel for="txtX" value="Latitute"/>
-                                    <p:inputText id="txtX" value="#{RastreadorController.rastreador.x}" required="true" />
-                                    <p:message for="txtX"/>
-                                    <p:outputLabel for="txtY" value="Longitute"/>
-                                    <p:inputText id="txtY" value="#{RastreadorController.rastreador.y}" required="true" />
-                                    <p:message for="txtY"/>
-                                    <p:outputLabel for="txtPotenteciaPaineis" value="Potência Painéis"/>
-                                    <p:inputText id="txtPotenteciaPaineis" value="#{RastreadorController.rastreador.potenciapaineis}" required="true" />
-                                    <p:message for="txtPotenteciaPaineis"/>
-                                </h:panelGrid>
-                                <p:commandButton icon="ui-icon-check" value="Cadastrar" update="pgDados, mensagem" actionListener="#{RastreadorController.registrar()}"/>
-                            </p:fieldset>
+                       <h:form id="frmCadastroRastreador">
+                           <p:growl id="growl" autoUpdate="true" severity="info, fatal" showSummary="true" showDetail="true"/> 
+                            <p:toolbar>
+                                <f:facet name="left">
+                                    <p:commandButton value="Novo" icon="ui-icon-document" process="@none" update="pgDados" actionListener="#{RastreadorController.limpar()}"/>
+                                    <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{RastreadorController.registrar()}" update="pgDados"/>
+                                </f:facet>
+                                <f:facet name="right">
+                                    <p:button value="Pesquisa" icon="ui-icon-search" outcome="consultarastreador.apolo" />
+                                </f:facet>
+                            </p:toolbar>
+                            <h:panelGrid columns="3" id="pgDados" style="margin-top: 20px;">
+                               <p:outputLabel for="txtNome" value="Nome"/>
+                               <p:inputText id="txtNome" value="#{RastreadorController.rastreador.nome}"  required="true" requiredMessage="Campo Obrigatório"/>
+                                <p:message for="txtNome"/>
+                                <p:outputLabel for="txtX" value="Latitute"/>
+                                <p:inputNumber id="txtX" value="#{RastreadorController.rastreador.x}" required="true"  requiredMessage="Campo Obrigatório"/>
+                                <p:message for="txtX"/>
+                                <p:outputLabel for="txtY" value="Longitute"/>
+                                <p:inputNumber id="txtY" value="#{RastreadorController.rastreador.y}" required="true"  requiredMessage="Campo Obrigatório"/>
+                                <p:message for="txtY"/>
+                                <p:outputLabel for="txtPotenteciaPaineis" value="Potência Painéis"/>
+                                <p:inputNumber id="txtPotenteciaPaineis" value="#{RastreadorController.rastreador.potenciapaineis}" required="true"  requiredMessage="Campo Obrigatório"/>
+                                <p:message for="txtPotenteciaPaineis"/>
+                            </h:panelGrid>
+                            <!-- <p:commandButton icon="ui-icon-check" value="Cadastrar" update="pgDados, mensagem" actionListener="#{RastreadorController.registrar()}"/> -->
                         </h:form>
-                        <h:outputScript library="js" name="portuguesBRLocale.js" />
+                <h:outputScript library="js" name="portuguesBRLocale.js" />
             </ui:define>
 
         </ui:composition>
-
     </body>
 </html>

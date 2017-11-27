@@ -10,9 +10,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
 
@@ -21,7 +21,7 @@ import org.primefaces.context.RequestContext;
  * @author raybm
  */
 @ManagedBean(name = "UsuarioController")
-@SessionScoped
+@ViewScoped
 public class UsuarioController implements Serializable{
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
@@ -84,8 +84,9 @@ public class UsuarioController implements Serializable{
     }
     
     public void ler(Usuario usuarioSelecionado){
-        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("usuarioSelecionado", usuarioSelecionado);
         this.usuario = usuarioSelecionado;
+        this.usuario.getRastreadores();
+  //      FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("usuarioSelecionado", usuarioSelecionado);
     }
     
     public void exibirDialogo(){
@@ -98,19 +99,7 @@ public class UsuarioController implements Serializable{
         req.execute("PF('wdialogo').hide()");
     }
     
-    public void adicionarRastreador(){
-        Integer idRastreador = (Integer) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("rastreadorSelecionado");
-        Rastreador r = rastreadorEJB.find(idRastreador);
-        this.usuario = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("usuarioSelecionado");
-        if(!this.usuario.getRastreadores().contains(r)){    
-            this.usuario.getRastreadores().add(r);
-            this.usuarioEJB.edit(usuario);
-            Mensagens.exibirMensagem("Rastreador " + r.getNome() + " cadastrado no Usuário " + this.usuario.getId().getNome(), false);
-        }
-        else
-        {
-         Mensagens.exibirMensagem("Rastreador " + r.getNome() + " já cadastrado no Usuário " + this.usuario.getId().getNome(), true);
-        }
-        ocultarDialogo();
-    } 
+    public void limpar(){
+        this.usuario = null;
+    }
 }
