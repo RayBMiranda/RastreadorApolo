@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apolo.webapp.ejb;
 
 import com.apolo.webapp.model.RastreadorHistorico;
@@ -38,11 +33,13 @@ public class RastreadorHistoricoFacade extends AbstractFacade<RastreadorHistoric
         List<RastreadorHistorico> lista = null;
         String consulta;
         try {
-            consulta = "From RastreadorHistorico rh WHERE rh.dataHora between ?1 and ?2 and rh.idRastreador.idrastreador = ?3";  
+            /*idRastreador = 1;
+            and rh.idRastreador.idrastreador = ?3 
+                     query.setParameter(3, idRastreador);*/
+            consulta = "From RastreadorHistorico rh WHERE rh.dataHora between ?1 and ?2 ";  
             Query query = em.createQuery(consulta);
             query.setParameter(1, dataInicial, TemporalType.DATE);
             query.setParameter(2, dataFinal, TemporalType.DATE);
-            query.setParameter(3, idRastreador);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

@@ -26,7 +26,7 @@ import org.primefaces.model.chart.LineChartModel;
  * @author raybm
  */
 @ManagedBean(name = "RastreadorHistoricoController")
-@SessionScoped
+@ViewScoped
 public class RastreadorHistoricoController implements Serializable{
     @EJB
     private RastreadorHistoricoFacadeLocal rastreadorHistoricoEJB;
@@ -111,7 +111,7 @@ public class RastreadorHistoricoController implements Serializable{
         // usa calendar para subtrair data
         Calendar calendarData = Calendar.getInstance();
         calendarData.setTime(dataFinal);
-        int numeroDiasParaSubtrair = 4;
+        int numeroDiasParaSubtrair = 10;
         // achar data de início
         calendarData.add(Calendar.DATE, numeroDiasParaSubtrair*-1);
         dataInicial = calendarData.getTime();  
