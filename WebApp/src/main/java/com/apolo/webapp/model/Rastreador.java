@@ -37,6 +37,9 @@ public class Rastreador implements Serializable{
     @Column(name="potenciapaineis")
     private double potenciapaineis;  
 
+    @Column(name="ip")
+    private String ip;
+    
     @ManyToMany(mappedBy="rastreadores", fetch=FetchType.EAGER)
     private List<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -45,6 +48,14 @@ public class Rastreador implements Serializable{
     }
         
     public List<Usuario> getUsuarios() { return usuarios; }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }  
     
     @Column(name = "chave")
     private String chave;

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.persistence.Table;
  *
  * @author raybm
  */
+@ViewScoped
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable{

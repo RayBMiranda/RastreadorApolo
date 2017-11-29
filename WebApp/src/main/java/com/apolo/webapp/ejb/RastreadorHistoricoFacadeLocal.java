@@ -31,6 +31,6 @@ public interface RastreadorHistoricoFacadeLocal {
 
     int count();
     
-    public List<RastreadorHistorico> buscarHistorico(Date dataInicial, Date dataFinal, Integer idRastreador);
+    public List<RastreadorHistorico> buscarHistorico(Date dataAtual, Integer idRastreador);
     
 }

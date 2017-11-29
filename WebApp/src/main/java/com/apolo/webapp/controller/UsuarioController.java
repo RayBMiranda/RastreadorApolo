@@ -7,10 +7,15 @@ import com.apolo.webapp.model.Rastreador;
 import com.apolo.webapp.model.Usuario;
 import com.apolo.webapp.util.Mensagens;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -21,28 +26,37 @@ import org.primefaces.context.RequestContext;
  * @author raybm
  */
 @ManagedBean(name = "UsuarioController")
-@ViewScoped
+@SessionScoped
 public class UsuarioController implements Serializable{
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
-    @EJB 
+    @EJB
     private RastreadorFacadeLocal rastreadorEJB;
     @Inject
     private Usuario usuario;
     @Inject
     private Pessoa pessoa;
-    
+    private Integer codigoRastreadorSelecionado;
+
     private List<Usuario> usuarios;
     
     @PostConstruct
     public void init(){
         usuarios = usuarioEJB.findAll();
     }
+
+    public Integer getCodigoRastreadorSelecionado() {
+        return codigoRastreadorSelecionado;
+    }
+
+    public void setCodigoRastreadorSelecionado(Integer codigoRastreadorSelecionado) {
+        this.codigoRastreadorSelecionado = codigoRastreadorSelecionado;
+    }
     
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
-
+     
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
@@ -64,16 +78,23 @@ public class UsuarioController implements Serializable{
     }
     
     public void editar(Usuario usuario){
+        System.out.println("passei aqui");
         usuarioEJB.edit(usuario);
         Mensagens.exibirMensagem("Registro Modificado", false);
     }
     
     public void registrar(){
     try {
+          Calendar c = Calendar.getInstance();
           this.usuario.setId(pessoa);
           if(usuarioEJB.existeUsuario(usuario))
           {
             Mensagens.exibirMensagem("Email já Cadastrado", true);
+            return;
+          }
+          if(usuario.getId().getDataNascimento().compareTo(c.getTime()) >= 0)
+          {
+            Mensagens.exibirMensagem("Data de Nascimento Inválida", true);
             return;
           }
           usuarioEJB.create(usuario);
@@ -85,6 +106,7 @@ public class UsuarioController implements Serializable{
     
     public void ler(Usuario usuarioSelecionado){
         this.usuario = usuarioSelecionado;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioSelecionado", this.usuario);
         this.usuario.getRastreadores();
   //      FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("usuarioSelecionado", usuarioSelecionado);
     }
@@ -102,4 +124,36 @@ public class UsuarioController implements Serializable{
     public void limpar(){
         this.usuario = null;
     }
-}
+    
+    public void adicionarRastreador(){
+        this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioSelecionado");
+        Rastreador rastreadorSelecionado = rastreadorEJB.find(codigoRastreadorSelecionado);
+        if(!this.usuario.getRastreadores().contains(rastreadorSelecionado)){    
+            this.usuario.getRastreadores().add(rastreadorSelecionado);
+            this.usuarioEJB.edit(this.usuario);
+            Mensagens.exibirMensagem("Rastreador " + rastreadorSelecionado.getNome() + " cadastrado no Usuário " + this.usuario.getId().getNome(), false);
+        }
+        else
+        {
+         Mensagens.exibirMensagem("Rastreador " + rastreadorSelecionado.getNome() + " já cadastrado no Usuário " + this.usuario.getId().getNome(), true);
+        }
+    }
+    
+    public void validaNumero(FacesContext context, UIComponent toValidate, Object value) {
+        boolean valida = false;
+        if(value != null){      
+           for (char letra : ((String) value).toCharArray()) { 
+              if(letra < '0' || letra > '9') { 
+                 valida = true;
+                 break; 
+            }  
+         }
+         ((UIInput) toValidate).setValid(!valida);
+        FacesMessage message = new FacesMessage(" Valor com numeros!");
+        message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        context.addMessage(toValidate.getClientId(context), message);
+        }
+    }    
+        
+}    
+

@@ -1,6 +1,7 @@
 #top {
     position: relative;
-    color: white;
+    color: white !important;
+    background-color: white !important;
     padding: 5px;
     margin: 0px 0px 10px 0px;
 }
@@ -44,13 +45,13 @@
 }
 
 #top a:link, #top a:visited {
-  color: #2E6E9E;
+  color: #ffffff;
   font-weight : bold;
   text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: black;
+  color: #c6c6c6;
   font-weight : bold;
   text-decoration : underline;
 }
@@ -59,11 +60,11 @@
 .noBorder td { border: 0 !important; }
 
 .transparentBackground tr,
-.transparentBackground td { background: transparent !important; }
+.transparentBackground td { background: black !important; padding-bottom: 10px;}
 
 .boxCointainer{
     width: 100%;
-    border-color: blue;
+    border-color: red !important; 
     text-align: center; 
     height: 35px;
 }

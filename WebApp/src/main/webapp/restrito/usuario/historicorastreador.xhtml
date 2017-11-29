@@ -11,23 +11,17 @@
 
             <ui:define name="content">
                  <h:form id="formGrafico">
-                    <div align="center" >
-                     <p:panelGrid columns="7" class="transparentBackground" style="margin: 0 auto; text-align: center;">
-                        <p:outputLabel for="txtDataInicio" value="Data Inicio"/>
-                        <p:calendar id="txtDataInicio" locale="pt_BR"	
+                    <div align="center">
+                     <p:panelGrid   columns="7" class="transparentBackground" style="margin: 0 auto; text-align: center;">
+                        <p:outputLabel for="txtData" value="Data"/>
+                        <p:calendar id="txtData" locale="pt_BR"	
                                 showOn="button"
                                 pattern="dd/MM/yyyy"
-                                value="#{RastreadorHistoricoController.dataInicial}" required="true"/>
-                        <p:message for="txtDataInicio"/>
-                        <p:outputLabel for="txtDataFinal" value="Data Final"/>
-                        <p:calendar id="txtDataFinal" locale="pt_BR"	
-                                showOn="button"
-                                pattern="dd/MM/yyyy"
-                                value="#{RastreadorHistoricoController.dataFinal}" required="true"/>
-                        <p:message for="txtDataFinal"/>
+                                value="#{RastreadorHistoricoController.dataAtual}" required="true"/>
+                        <p:message for="txtData"/>
                    </p:panelGrid>
                    <p:poll interval="3" update="chart" /> 
-                   <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:500px;height:300px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
+                   <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:auto;height:400px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
                 </div>  
                 </h:form>
 

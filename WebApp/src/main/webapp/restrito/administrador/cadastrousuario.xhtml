@@ -26,11 +26,11 @@
                                 <h:panelGrid columns="3" id="pgDados">
 
                                     <p:outputLabel for="txtNome" value="Nome"/>
-                                    <p:inputText id="txtNome" value="#{UsuarioController.pessoa.nome}" required="true" />
+                                    <p:inputText id="txtNome"  value="#{UsuarioController.pessoa.nome}" validator="#{UsuarioController.validaNumero(context, toValidate, value)}" required="true" />
                                     <p:message for="txtNome"/>
 
                                     <p:outputLabel for="txtSobrenome" value="Sobrenome"/>
-                                    <p:inputText id="txtSobrenome" value="#{UsuarioController.pessoa.sobrenome}" required="true" />
+                                    <p:inputText id="txtSobrenome" value="#{UsuarioController.pessoa.sobrenome}" validator="#{UsuarioController.validaNumero}" required="true" />
                                     <p:message for="txtSobrenome"/>
 
                                     <p:outputLabel for="rdbSexo" value="Sexo"/>

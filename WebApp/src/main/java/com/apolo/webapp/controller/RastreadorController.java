@@ -47,8 +47,6 @@ public class RastreadorController implements Serializable{
         this.acao = acao;
     }
     
-    
-    
     public Integer getCodigoRastreador() {
         return codigoRastreador;
     }
@@ -89,10 +87,10 @@ public class RastreadorController implements Serializable{
         }
     }
     
-    public void editar(){
+    public void editar(Rastreador ras){
         try {
-            rastreadorEJB.edit(this.rastreador);
-            Mensagens.exibirMensagem("Rastreador " + rastreador.getNome() + " alterado com sucesso !", false);
+            rastreadorEJB.edit(ras);
+            Mensagens.exibirMensagem("Rastreador " + ras.getNome() + " alterado com sucesso !", false);
         } catch (Exception e) {
             Mensagens.exibirMensagem("Erro ao alterar rastreador ! \n" + e.getMessage(), true);
         }

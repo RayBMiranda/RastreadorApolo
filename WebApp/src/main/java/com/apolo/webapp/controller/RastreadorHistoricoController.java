@@ -19,6 +19,7 @@ import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartModel;
 
 /**
@@ -40,8 +41,7 @@ public class RastreadorHistoricoController implements Serializable{
     @Inject
     private RastreadorHistorico rastreadorHistorico;
     
-    private Date dataInicial; 
-    private Date dataFinal;
+    private Date dataAtual; 
     private Integer idRastreador;
     private String key;
 
@@ -69,29 +69,22 @@ public class RastreadorHistoricoController implements Serializable{
         this.rastreadorHistorico = rastreadorHistorico;
     }
 
-    public Date getDataInicial() {
-        return dataInicial;
+    public Date getDataAtual() {
+        return dataAtual;
     }
 
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
-    }
-
-    public Date getDataFinal() {
-        return dataFinal;
-    }
-
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
+    public void setDataAtual(Date dataAtual) {
+        this.dataAtual = dataAtual;
     }
 
     public LineChartModel getLineModelGeracao() {
-        listaRastreadorHistorico = rastreadorHistoricoEJB.buscarHistorico(dataInicial, dataFinal, idRastreador);
+        listaRastreadorHistorico = rastreadorHistoricoEJB.buscarHistorico(dataAtual, idRastreador);
         if(lineModelGeracao != null)
             lineModelGeracao.clear();
         lineModelGeracao = initGeracaoModel();
         lineModelGeracao.setTitle("Histórico de Geração");
         lineModelGeracao.setLegendPosition("e");
+        lineModelGeracao.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         lineModelGeracao.setShowPointLabels(true);
         lineModelGeracao.getAxes().put(AxisType.X, new CategoryAxis("Data"));
         Axis yAxis = lineModelGeracao.getAxis(AxisType.Y);
@@ -107,14 +100,14 @@ public class RastreadorHistoricoController implements Serializable{
     @PostConstruct
     public void init(){
         // data final igual a hoje
-        dataFinal = new Date();
+        dataAtual = new Date();
         // usa calendar para subtrair data
         Calendar calendarData = Calendar.getInstance();
-        calendarData.setTime(dataFinal);
-        int numeroDiasParaSubtrair = 10;
+        calendarData.setTime(dataAtual);
+        int numeroDiasParaSubtrair = 2;
         // achar data de início
         calendarData.add(Calendar.DATE, numeroDiasParaSubtrair*-1);
-        dataInicial = calendarData.getTime();  
+        dataAtual = calendarData.getTime();  
     }
     
      private LineChartModel initGeracaoModel() {
@@ -129,7 +122,7 @@ public class RastreadorHistoricoController implements Serializable{
         if(listaRastreadorHistorico != null)
         {
             for (RastreadorHistorico rastreadorH : listaRastreadorHistorico) {
-                String dataHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(rastreadorH.getDataHora());
+                String dataHora = new SimpleDateFormat("HH:mm").format(rastreadorH.getDataHora());
                 Double tensao = rastreadorH.getTensao();
                 Double corrente = rastreadorH.getCorrente();
                 Double potencia = tensao * corrente;

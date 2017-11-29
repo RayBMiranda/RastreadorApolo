@@ -1,6 +1,7 @@
 package com.apolo.webapp.ejb;
 
 import com.apolo.webapp.model.RastreadorHistorico;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -29,17 +30,17 @@ public class RastreadorHistoricoFacade extends AbstractFacade<RastreadorHistoric
     }
               
     @Override
-    public List<RastreadorHistorico> buscarHistorico(Date dataInicial, Date dataFinal, Integer idRastreador) {
+    public List<RastreadorHistorico> buscarHistorico(Date dataAtual, Integer idRastreador) {
         List<RastreadorHistorico> lista = null;
         String consulta;
         try {
-            /*idRastreador = 1;
-            and rh.idRastreador.idrastreador = ?3 
-                     query.setParameter(3, idRastreador);*/
-            consulta = "From RastreadorHistorico rh WHERE rh.dataHora between ?1 and ?2 ";  
+            consulta = "From RastreadorHistorico rh WHERE rh.dataHora Between ?1 AND ?2 ";  
             Query query = em.createQuery(consulta);
-            query.setParameter(1, dataInicial, TemporalType.DATE);
-            query.setParameter(2, dataFinal, TemporalType.DATE);
+            Calendar c = Calendar.getInstance();
+            c.setTime(dataAtual);
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            query.setParameter(1, dataAtual, TemporalType.DATE);
+            query.setParameter(2, c.getTime(), TemporalType.DATE);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
