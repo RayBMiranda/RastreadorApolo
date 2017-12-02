@@ -60,7 +60,7 @@
 .noBorder td { border: 0 !important; }
 
 .transparentBackground tr,
-.transparentBackground td { background: black !important; padding-bottom: 10px;}
+.transparentBackground td { background: transparent !important; padding-bottom: 10px;}
 
 .boxCointainer{
     width: 100%;
@@ -74,6 +74,7 @@
     width: auto; 
     height: 35px;
     margin: 0px 10px;
+   
 }
 
 #divUsuario{

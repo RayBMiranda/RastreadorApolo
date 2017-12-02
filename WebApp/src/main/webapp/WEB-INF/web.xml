@@ -8,10 +8,7 @@
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/index.apolo</location>
     </error-page>
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>midnight</param-value>
-    </context-param>
+
     <servlet>
         <servlet-name>Rastreador Solar Apolo</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

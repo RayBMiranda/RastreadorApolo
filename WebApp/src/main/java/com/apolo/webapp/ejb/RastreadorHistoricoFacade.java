@@ -33,15 +33,32 @@ public class RastreadorHistoricoFacade extends AbstractFacade<RastreadorHistoric
     public List<RastreadorHistorico> buscarHistorico(Date dataAtual, Integer idRastreador) {
         List<RastreadorHistorico> lista = null;
         String consulta;
-        try {
-            consulta = "From RastreadorHistorico rh WHERE rh.dataHora Between ?1 AND ?2 ";  
+        try {           
+            Calendar toDate = Calendar.getInstance();
+            toDate.setTime(dataAtual);
+            toDate.add(Calendar.HOUR_OF_DAY, 0);
+            toDate.add(Calendar.MINUTE, 0);
+            toDate.add(Calendar.SECOND, 0);
+            toDate.add(Calendar.MILLISECOND, 0);
+            dataAtual = toDate.getTime();
+            java.sql.Timestamp date1 = new java.sql.Timestamp(dataAtual.getTime());
+            
+            toDate.setTime(dataAtual);
+            toDate.add(Calendar.HOUR_OF_DAY, 23);
+            toDate.add(Calendar.MINUTE, 59);
+            toDate.add(Calendar.SECOND, 59);
+            toDate.add(Calendar.MILLISECOND, 999);
+            
+            java.sql.Timestamp date2 = new java.sql.Timestamp(toDate.getTime().getTime());
+            
+            consulta = "From RastreadorHistorico rh WHERE rh.idRastreador.idrastreador = ?1 AND rh.dataHora BETWEEN ?2 AND ?3";  
             Query query = em.createQuery(consulta);
-            Calendar c = Calendar.getInstance();
-            c.setTime(dataAtual);
-            c.add(Calendar.DAY_OF_MONTH, 1);
-            query.setParameter(1, dataAtual, TemporalType.DATE);
-            query.setParameter(2, c.getTime(), TemporalType.DATE);
+            
+            query.setParameter(1, idRastreador);
+            query.setParameter(2, date1, TemporalType.TIMESTAMP);
+            query.setParameter(3, date2, TemporalType.TIMESTAMP);
             lista = query.getResultList();
+            
         } catch (Exception e) {
             throw e;
         }

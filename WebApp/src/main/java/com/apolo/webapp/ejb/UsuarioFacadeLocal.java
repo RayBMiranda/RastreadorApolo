@@ -28,4 +28,6 @@ public interface UsuarioFacadeLocal {
     boolean existeUsuario(Usuario u);
     
     public Usuario iniciarSessao(Usuario us);
+    
+    public Usuario findEmail(Usuario us);
 }

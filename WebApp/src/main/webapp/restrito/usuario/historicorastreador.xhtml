@@ -3,27 +3,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+    <body styleClass="cyan lighten-5">
 
         <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
 
             <ui:define name="content">
-                 <h:form id="formGrafico">
-                    <div align="center">
-                     <p:panelGrid   columns="7" class="transparentBackground" style="margin: 0 auto; text-align: center;">
+                <h:form id="formGrafico">
+                    <f:metadata>
+                        <f:viewParam name="idRastreador" value="#{RastreadorHistoricoController.idRastreador}" />
+                    </f:metadata>
+                    <div >
+                        <p:panelGrid   columns="7" class="transparentBackground" style="margin: 0 auto; text-align: center;">
                         <p:outputLabel for="txtData" value="Data"/>
                         <p:calendar id="txtData" locale="pt_BR"	
                                 showOn="button"
                                 pattern="dd/MM/yyyy"
                                 value="#{RastreadorHistoricoController.dataAtual}" required="true"/>
                         <p:message for="txtData"/>
-                   </p:panelGrid>
-                   <p:poll interval="3" update="chart" /> 
-                   <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:auto;height:400px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
-                </div>  
+                        <p:commandButton value="Pesquisar" ajax="false" update=":formGrafico:chart" >
+                            
+                        </p:commandButton>
+                        </p:panelGrid>
+                        <p:outputLabel value="Sem Registros no Período"/>
+                        <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:auto;min-width: 400px; height:400px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
+                    </div>
                 </h:form>
+                
+                <h:outputScript library="js" name="portuguesBRLocale.js" />
 
             </ui:define>
 

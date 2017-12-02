@@ -17,6 +17,12 @@
                     <p:growl id="growl" autoUpdate="true" showDetail="true"/>    
 
                     <p:toolbar>
+                        <f:facet name="left">
+                            <h:commandLink>
+                                <h:graphicImage style="margin-left: 5px; width: 50px; height: 50px;" url="../../resources/images/pdf-icon.png" />
+                                <p:dataExporter type="pdf" target="rastreadoresTable" fileName="rastreadores"/>
+                            </h:commandLink >
+                        </f:facet>
                         <f:facet name="right">
                             <p:button value="Novo"  icon="ui-icon-disk" outcome="cadastrorastreador.apolo" />
                         </f:facet>
@@ -29,7 +35,7 @@
                                  paginatorPosition="Bottom"
                                  editable="true"
                                  >
-                        <p:column style="width:32px">
+                        <p:column exportable="false" style="width:32px">
                             <p:rowEditor />
                         </p:column>
                         <p:column style="width:50px;" headerText="ID">
@@ -84,10 +90,11 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column style="text-align: center;">
+                        <p:column exportable="false" style="text-align: center;">
                             <p:commandButton value="Histórico" action="/restrito/usuario/historicorastreador.apolo?faces-redirect=true" >
                                 <f:setPropertyActionListener value="#{rastreador.idrastreador}" target="#{RastreadorHistoricoController.idRastreador}" /> 
-                            </p:commandButton>    
+                            </p:commandButton>  
+                            <p:commandButton value="exportar codigo" action="#{RastreadorController.download()}"/>
                         </p:column>
                         <p:ajax event="rowEdit" update=":frmRastreador:rastreadoresTable" listener="#{RastreadorController.editar(rastreador)}" />
                     </p:dataTable>

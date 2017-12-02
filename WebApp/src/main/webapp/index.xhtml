@@ -5,33 +5,61 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
-        <h:outputStylesheet library="css" name="index.css"/>
+        <title>Apolo</title>
+        <h:outputStylesheet library="css" name="materialize.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <script type="text/javascript" src="./resources/js/materialize.js"></script>
+        <script type="text/javascript" src="./resources/js/jquery.js"></script>
     </h:head>
-    <h:body id="principal">
-        <div id="quadro">
-            <h:form>
-                <p:messages autoUpdate="true" showDetail="true"/>
-                <h:panelGrid columns="2">
-                    <p:outputLabel for="txtEmail" value="Email"/>
-                    <p:inputText id="txtEmail" value="#{IndexController.usuario.email}" 
-                                 required="true" requiredMessage="Campo requerido"
-                                 validatorMessage="Email com Formato Invalido">
-                        <f:validateRegex pattern=
-                                         "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                    </p:inputText> 
-                    <p:outputLabel for="txtSenha" value="Senha"/>
-                    <p:password id="txtSenha" value="#{IndexController.usuario.senha}" required="true" />
-                    <h:column /> 
-                    <p:commandButton icon="ui-icon-key" action="#{IndexController.iniciarSessao()}" value="Entrar"/>
-                </h:panelGrid>  
-                <p:separator />
-                <!--<p:link value="Criar Conta" outcome="usuario"/>-->
-            </h:form>
+    <h:body styleClass="cyan lighten-5">
+        <div id="login-page" class="valign-wrapper" style="height: 500px;">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s6 offset-s3" >
+                            <div class="card">
+                                <div class="card-content">
+                                    <h:graphicImage class="responsive-img" style="max-width: 200px;" url="./resources/images/apolo-logo.png" />
+                                    <div class="left-align">
+                                        <h:form id="login-form">
+                                            <p:messages autoUpdate="true" showDetail="true"/>
+                                            <div class="row">
+                                                    <div class="col s12 input-field">
+                                                        <p:inputText style="padding-left: 5px;" id="txtEmail" value="#{IndexController.usuario.email}" 
+                                                                     required="true" requiredMessage="Campo requerido"
+                                                                     validatorMessage="Email com Formato Invalido">
+                                                            <f:validateRegex pattern=
+                                                                             "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                        </p:inputText>
+                                                        <h:outputLabel for="txtEmail" value="Email"/>
+                                                    </div>    
+                                                    <div class="col s12 input-field">
+                                                        <h:inputSecret class="validate" style="padding-left: 5px;" id="txtSenha" value="#{IndexController.usuario.senha}" required="true" requiredMessage="Senha requerida" />
+                                                        <h:outputLabel for="txtSenha" value="Senha"/>
+                                                    </div> 
+                                                <div class="col s12 input-field" style="text-align: center;">
+                                                        <h:commandLink  styleClass="btn btn-large" action="#{IndexController.iniciarSessao()}" value="Entrar"/>
+                                                        <h:commandLink  styleClass="light" style="font-weight: bold; margin-left: 80px;" action="esqueciminhasenha.apolo?faces-redirect=true" value="Esqueci minha senha"/>
+                                                    </div>        
+                                            </div>    
+                                            <!--<p:link value="Criar Conta" outcome="usuario"/>-->
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>    
+            </div>    
         </div>    
         <br />
     </h:body>
-
+        <script>
+            $(document).on("ready", function(){
+                $('#login-page').css({'height': window-innerHeight + 'px'});
+            });
+            Materialize.updateTextFields();
+        </script>   
 
 
 

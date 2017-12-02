@@ -92,12 +92,16 @@ public class UsuarioController implements Serializable{
             Mensagens.exibirMensagem("Email já Cadastrado", true);
             return;
           }
-          if(usuario.getId().getDataNascimento().compareTo(c.getTime()) >= 0)
+          Calendar dataAnterior = Calendar.getInstance();
+          dataAnterior.add(Calendar.YEAR, -100);
+          if(usuario.getId().getDataNascimento().compareTo(c.getTime()) >= 0 || usuario.getId().getDataNascimento().compareTo(dataAnterior.getTime()) <= 0)
           {
             Mensagens.exibirMensagem("Data de Nascimento Inválida", true);
             return;
           }
           usuarioEJB.create(usuario);
+          usuario.setId(null);
+          limpar();
           Mensagens.exibirMensagem("Usuário Registrado", false);
         } catch (Exception e) { 
           Mensagens.exibirMensagem("Erro ao Registrar Usuário", true);
@@ -125,6 +129,14 @@ public class UsuarioController implements Serializable{
         this.usuario = null;
     }
     
+    public void remover(Rastreador ras){
+        rastreadorEJB.remove(ras);
+    }
+    
+    public void lerRastreador(Integer codigo){
+        this.codigoRastreadorSelecionado = codigo;
+    }
+    
     public void adicionarRastreador(){
         this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioSelecionado");
         Rastreador rastreadorSelecionado = rastreadorEJB.find(codigoRastreadorSelecionado);
@@ -137,6 +149,19 @@ public class UsuarioController implements Serializable{
         {
          Mensagens.exibirMensagem("Rastreador " + rastreadorSelecionado.getNome() + " já cadastrado no Usuário " + this.usuario.getId().getNome(), true);
         }
+    }
+    
+    public void removerUsuario(Usuario usuario){
+        try
+            {
+             usuarioEJB.remove(usuario);
+             usuarios = usuarioEJB.findAll();
+             Mensagens.exibirMensagem("Usuário " + this.usuario.getId().getNome() + " Removido ", false);     
+            }
+            catch(Exception e)
+            {
+                Mensagens.exibirMensagem("Erro ao Remover o Usuário " + this.usuario.getId().getNome() + " " + e.getMessage(), true);     
+            }
     }
     
     public void validaNumero(FacesContext context, UIComponent toValidate, Object value) {
@@ -153,7 +178,7 @@ public class UsuarioController implements Serializable{
         message.setSeverity(FacesMessage.SEVERITY_ERROR);
         context.addMessage(toValidate.getClientId(context), message);
         }
-    }    
+    }
         
 }    
 

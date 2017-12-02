@@ -5,21 +5,33 @@ import com.apolo.webapp.model.Rastreador;
 import com.apolo.webapp.model.Usuario;
 import com.apolo.webapp.util.Criptografia;
 import com.apolo.webapp.util.Mensagens;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
  * @author raybm
  */
 @ManagedBean(name="RastreadorController")
-@ViewScoped
+@SessionScoped
 public class RastreadorController implements Serializable{
     @EJB
     private RastreadorFacadeLocal rastreadorEJB;
@@ -148,5 +160,36 @@ public class RastreadorController implements Serializable{
         this.rastreador = rastreadorEJB.find(codigoRastreador);
         this.rastreador.getUsuarios();
     }
+    
+    public void download() throws IOException {
+    //Pega a instancia 
+    FacesContext fc = FacesContext.getCurrentInstance();
+
+    //Pega o contexto de resposta
+    HttpServletResponse ec = (HttpServletResponse) fc.getExternalContext().getResponse();
+
+    //Zerando qualquer coisa que possa ter sido colocada na resposta
+    ec.reset();
+    
+    //Colocando o tipo do arquivo, procure na internet os tipos disponiveis, no tipo abaixo será para TXT
+    ec.setContentType("text/plain"); 
+    
+    //Caso queira mostrar o tamanho do download, setar o tamanho abaixo
+    //ec.setContentLength(contentLength); 
+
+    //Coloca o nome do arquivo
+    ec.setHeader("Content-Disposition", "attachment; filename=\"Arquivo.txt\""); 
+
+    //Pega o output para escrever no arquivo
+    OutputStream output = ec.getOutputStream();   
+ 
+    //Escrevendo TESTE
+    output.write("teste".getBytes());
+
+    //Para finalizar o processo
+    output.flush();
+    output.close();
+    fc.responseComplete(); 
+}
     
 }

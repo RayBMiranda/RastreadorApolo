@@ -1,5 +1,4 @@
 package com.apolo.webapp.ejb;
-import com.apolo.webapp.util.OpcoesLog;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;

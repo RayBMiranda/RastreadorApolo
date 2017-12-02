@@ -12,19 +12,19 @@ import javax.faces.context.FacesContext;
  *
  * @author raybm
  */
-public class Mensagens {
-   public static void exibirMensagem(String msg, boolean msgErro){
-       FacesMessage.Severity nivel;
-       String titulo;
-       if(msgErro){
+public class Mensagens{
+    public static void exibirMensagem(String msg, boolean msgErro){
+        FacesMessage.Severity nivel;
+        String titulo;
+        if(msgErro){
            titulo = "Erro";
            nivel = FacesMessage.SEVERITY_FATAL;
-       }
-       else
-       {  
-           titulo = "Aviso";
-           nivel = FacesMessage.SEVERITY_INFO;
-       }
-       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nivel, titulo, msg));
-   }
+        }
+        else
+        {  
+            titulo = "Aviso";
+            nivel = FacesMessage.SEVERITY_INFO;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nivel, titulo, msg));
+    }
 }

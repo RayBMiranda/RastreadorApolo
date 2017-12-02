@@ -7,10 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
    <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Facelets Template</title>
+        <title>Apolo</title>
         <f:event type="preRenderView" listener="#{ModeloController.verificarSessao()}"/>
         <h:outputStylesheet library="css" name="cssLayout.css"/>
-    </h:head>
+   </h:head>
 
     <h:body>
 
@@ -22,10 +22,14 @@
                              <div class = "boxCointainer">
                                  <div id="divUsuario" class="box">    
                                      <p:outputLabel value="#{MenuController.saudacao} #{MenuController.usuarioLogado.id.nome}" />
-                                </div>
-                                 <div class="box" style=" width: 40px;">
-                                    <p:commandButton actionListener="#{MenuController.fecharSessao()}" icon="ui-icon-power" title="Encerrar" action="/index?faces-redirect=true"/>
-                                </div>
+                                     
+                                 </div>
+                                 <div class="box">
+                                     <p:panelGrid columns="2">
+                                        <p:commandButton icon="ui-icon-key" />
+                                        <p:commandButton actionListener="#{MenuController.fecharSessao()}" icon="ui-icon-power" title="Encerrar" action="/index?faces-redirect=true"/>
+                                     </p:panelGrid>
+                                 </div>
                             </div> 
                         </f:facet>
                     </p:menubar>    
@@ -37,7 +41,7 @@
             <ui:insert name="content">Content</ui:insert>
         </div>
         
-        <div id="bottom" style="text-align: center">
+        <div id="bottom" style="align-content: bottom ;text-align: center;">
             <ui:insert name="bottom">
                 <p>Apolo Rastreador Solar 2017</p>
                 <p>TCC - Sistemas de Informação</p>

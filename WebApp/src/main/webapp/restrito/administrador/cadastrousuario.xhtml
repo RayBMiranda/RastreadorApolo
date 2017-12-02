@@ -15,22 +15,26 @@
                             <p:messages id="mensagem" autoUpdate="false" severity="info, fatal" closable="true" showDetail="true" />
                             <p:toolbar>
                                 <f:facet name="left">
-                                    <p:commandButton value="Novo" icon="ui-icon-document" process="@none" update="pgDados" actionListener="#{UsuarioController.limpar()}"/>
-                                    <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{UsuarioController.registrar()}" update="pgDados"/>
+                                    <p:commandButton class="waves-effect waves-light btn-flat" value="Novo" icon="ui-icon-document" process="@none" update="pgDados" actionListener="#{UsuarioController.limpar()}"/>
+                                    <p:commandButton class="waves-effect waves-light btn-flat" value="Salvar" icon="ui-icon-disk" actionListener="#{UsuarioController.registrar()}" update="pgDados"/>
                                 </f:facet>
                                 <f:facet name="right">
-                                    <p:button value="Pesquisa" icon="ui-icon-search" outcome="consultausuario.apolo" />
+                                    <p:button class="waves-effect waves-light btn-flat" value="Pesquisa" icon="ui-icon-search" outcome="consultausuario.apolo" />
                                 </f:facet>
                             </p:toolbar>
                             <p:fieldset legend="Dados Pessoais" style="margin-top: 20px;">
                                 <h:panelGrid columns="3" id="pgDados">
-
-                                    <p:outputLabel for="txtNome" value="Nome"/>
-                                    <p:inputText id="txtNome"  value="#{UsuarioController.pessoa.nome}" validator="#{UsuarioController.validaNumero(context, toValidate, value)}" required="true" />
-                                    <p:message for="txtNome"/>
-
+                                    <div class="col s12 input-field">
+                                        <input id="input_text" type="text" data-length="10"/>
+                                        <p:outputLabel for="txtNome" value="Nome"/>
+                                        <p:inputText validatorMessage="Nome Inválido" id="txtNome"  value="#{UsuarioController.pessoa.nome}" required="true" >
+                                        </p:inputText>    
+                                        <p:message for="txtNome"/>
+                                    </div>
+                                        
                                     <p:outputLabel for="txtSobrenome" value="Sobrenome"/>
-                                    <p:inputText id="txtSobrenome" value="#{UsuarioController.pessoa.sobrenome}" validator="#{UsuarioController.validaNumero}" required="true" />
+                                    <p:inputText id="txtSobrenome" value="#{UsuarioController.pessoa.sobrenome}" required="true" />
+                                    <p:clientValidator event="keyup" />
                                     <p:message for="txtSobrenome"/>
 
                                     <p:outputLabel for="rdbSexo" value="Sexo"/>

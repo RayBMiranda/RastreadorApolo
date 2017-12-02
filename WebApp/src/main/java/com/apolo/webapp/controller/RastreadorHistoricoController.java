@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.model.chart.Axis;
@@ -27,7 +28,7 @@ import org.primefaces.model.chart.LineChartModel;
  * @author raybm
  */
 @ManagedBean(name = "RastreadorHistoricoController")
-@ViewScoped
+@SessionScoped
 public class RastreadorHistoricoController implements Serializable{
     @EJB
     private RastreadorHistoricoFacadeLocal rastreadorHistoricoEJB;
@@ -59,6 +60,11 @@ public class RastreadorHistoricoController implements Serializable{
 
     public void setIdRastreador(Integer idRastreador) {
         this.idRastreador = idRastreador;
+      /*  if(idRastreador != null)
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idRastreador", idRastreador);
+        else
+         this.idRastreador = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idRastreador");
+    */
     }
     
     public RastreadorHistorico getRastreadorHistorico() {
@@ -78,7 +84,7 @@ public class RastreadorHistoricoController implements Serializable{
     }
 
     public LineChartModel getLineModelGeracao() {
-        listaRastreadorHistorico = rastreadorHistoricoEJB.buscarHistorico(dataAtual, idRastreador);
+        listaRastreadorHistorico = rastreadorHistoricoEJB.buscarHistorico(dataAtual, idRastreador); 
         if(lineModelGeracao != null)
             lineModelGeracao.clear();
         lineModelGeracao = initGeracaoModel();
@@ -104,7 +110,7 @@ public class RastreadorHistoricoController implements Serializable{
         // usa calendar para subtrair data
         Calendar calendarData = Calendar.getInstance();
         calendarData.setTime(dataAtual);
-        int numeroDiasParaSubtrair = 2;
+        int numeroDiasParaSubtrair = 4;
         // achar data de início
         calendarData.add(Calendar.DATE, numeroDiasParaSubtrair*-1);
         dataAtual = calendarData.getTime();  

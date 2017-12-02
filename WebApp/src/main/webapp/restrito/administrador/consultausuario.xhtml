@@ -20,34 +20,37 @@
                         <p:button value="Novo"  icon="ui-icon-document" outcome="cadastrousuario.apolo" />
                     </p:toolbarGroup>
                 </p:toolbar>
-                    <p:dataTable id="tabela" emptyMessage="Nenhum usuário registrado" value="#{UsuarioController.usuarios}" var="usu" editable="true" >
-                       <p:column style="width:32px">
-                            <p:rowEditor />
-                        </p:column>
-                       <p:column style="width: 200px;" headerText="Email" filterBy="#{usu.email}" filterStyle="max-width: 250px; min-width: 250px;" filterMatchMode="contains">
+                    <p:dataTable id="tabela" styleClass="table" style="max-width: 100%; min-width: 550px" emptyMessage="Nenhum usuário registrado" value="#{UsuarioController.usuarios}" var="usu" editable="true" >
+                       <p:column style="width: 100px;" headerText="Email" filterBy="#{usu.email}" filterStyle="max-width: 250px; min-width: 250px;" filterMatchMode="contains">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{usu.email}"/>
                                 </f:facet>
-
                                 <f:facet name="input">
-                                    <p:inputText value="#{usu.email}" />
+                                    <p:inputText  id="inputEmail" value="#{usu.email}" />
+                                    <p:tooltip id="toolTipUsuEmail" for="inputEmail" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
-                       </p:column>
+                        </p:column>
                         <p:ajax event="rowEdit" update=":frmPrincipal:tabela" listener="#{UsuarioController.editar(usu)}" />
-                        <p:column style="width: 200px;" headerText="Nome" filterBy="#{usu.id.nome} #{usu.id.sobrenome}" filterStyle="max-width: 250px; min-width: 250px;" filterMatchMode="contains">
-                           <h:outputText value="#{usu.id.nome} #{usu.id.sobrenome}"/>
-                       </p:column>
-                       <p:column style="width:42px">    
-                           <p:commandButton value="Cadastrar Rastreador" onclick="PF('wdialogo').show();" actionListener="#{UsuarioController.ler(usu)}">
-                              <f:setPropertyActionListener value="#{usu}" target="#{UsuarioController.usuario}" />
-                           </p:commandButton>
-                       </p:column>
+                        <p:column style="width: 100px;" headerText="Nome" filterBy="#{usu.id.nome} #{usu.id.sobrenome}" filterStyle="max-width: 250px; min-width: 250px;" filterMatchMode="contains">
+                            <h:outputText value="#{usu.id.nome} #{usu.id.sobrenome}"/>
+                        </p:column>
+                        <p:column exportable="false" class="noBorder" width="8" style="white-space: nowrap;">
+                            <p:rowEditor style="display: inline-block; vertical-align: middle;" />
+                            <p:panelGrid class="transparentBackground" style="border: none;" columns="3">
+                                <p:commandButton title="Cadastrar Rastreadores" icon="ui-icon-plus" onclick="PF('wdialogo').show();" actionListener="#{UsuarioController.ler(usu)}">
+                                   <f:setPropertyActionListener value="#{usu}" target="#{UsuarioController.usuario}" />
+                                </p:commandButton>
+                                <p:commandButton title="Excluir Usuário" update="tabela" icon="ui-icon-trash" process="@this" action="#{UsuarioController.removerUsuario(usu)}">
+                                   <f:setPropertyActionListener value="#{usu}" target="#{UsuarioController.usuario}" />
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </p:column>
                     </p:dataTable>
                     <p:dialog id="dialogo" widgetVar="wdialogo" height="500px" header="Cadastrar Rastreadores" modal="true" closeOnEscape="true" resizable="false">
-                        <p:dataTable id="dataRastreadores" value="#{RastreadorController.rastreadores}" style="width: 700px;" scrollRows="2" var="ras">
-                            <p:column headerText="ID">
+                            <p:dataTable id="dataRastreadores" value="#{RastreadorController.rastreadores}" style="width: 700px;" scrollRows="2" var="ras">
+                                <p:column headerText="ID" width="70">
                                 <p:outputLabel value="#{ras.idrastreador}"></p:outputLabel>
                             </p:column>
                             <p:column headerText="Nome">
@@ -56,10 +59,10 @@
                             <p:column headerText="Key">
                                 <p:outputLabel value="#{ras.chave}"></p:outputLabel>
                             </p:column>
-                            <p:column>      
-                                <p:commandButton icon="ui-icon-check" value="Cadastrar" actionListener="#{UsuarioController.adicionarRastreador()}">
-                                    <f:setPropertyActionListener value="#{ras.idrastreador}" target="#{UsuarioController.codigoRastreadorSelecionado}" /> 
-                                </p:commandButton>      
+                            <p:column exportable="false">      
+                                <p:commandButton icon="ui-icon-check" ajax="false" value="Cadastrar" action="#{UsuarioController.adicionarRastreador()}">
+                                    <f:setPropertyActionListener value="#{ras.idrastreador}" target="#{UsuarioController.codigoRastreadorSelecionado}"/>
+                                </p:commandButton>     
                             </p:column>
                         </p:dataTable>   
                     </p:dialog>
