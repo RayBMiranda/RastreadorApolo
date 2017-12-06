@@ -17,18 +17,14 @@
         <div id="top" class="top">
             <ui:insert name="top">
                 <h:form>
-                    <p:menubar model="#{MenuController.model}">
+                    <p:menubar style="menu" model="#{MenuController.model}">
                          <f:facet  name="options" >
                              <div class = "boxCointainer">
                                  <div id="divUsuario" class="box">    
                                      <p:outputLabel value="#{MenuController.saudacao} #{MenuController.usuarioLogado.id.nome}" />
-                                     
                                  </div>
                                  <div class="box">
-                                     <p:panelGrid columns="2">
-                                        <p:commandButton icon="ui-icon-key" />
-                                        <p:commandButton actionListener="#{MenuController.fecharSessao()}" icon="ui-icon-power" title="Encerrar" action="/index?faces-redirect=true"/>
-                                     </p:panelGrid>
+                                    <p:commandButton actionListener="#{MenuController.fecharSessao()}" icon="ui-icon-power" title="Encerrar" action="/index?faces-redirect=true"/>
                                  </div>
                             </div> 
                         </f:facet>

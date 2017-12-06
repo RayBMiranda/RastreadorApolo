@@ -162,34 +162,7 @@ public class RastreadorController implements Serializable{
     }
     
     public void download() throws IOException {
-    //Pega a instancia 
-    FacesContext fc = FacesContext.getCurrentInstance();
-
-    //Pega o contexto de resposta
-    HttpServletResponse ec = (HttpServletResponse) fc.getExternalContext().getResponse();
-
-    //Zerando qualquer coisa que possa ter sido colocada na resposta
-    ec.reset();
-    
-    //Colocando o tipo do arquivo, procure na internet os tipos disponiveis, no tipo abaixo será para TXT
-    ec.setContentType("text/plain"); 
-    
-    //Caso queira mostrar o tamanho do download, setar o tamanho abaixo
-    //ec.setContentLength(contentLength); 
-
-    //Coloca o nome do arquivo
-    ec.setHeader("Content-Disposition", "attachment; filename=\"Arquivo.txt\""); 
-
-    //Pega o output para escrever no arquivo
-    OutputStream output = ec.getOutputStream();   
- 
-    //Escrevendo TESTE
-    output.write("teste".getBytes());
-
-    //Para finalizar o processo
-    output.flush();
-    output.close();
-    fc.responseComplete(); 
+   
 }
     
 }

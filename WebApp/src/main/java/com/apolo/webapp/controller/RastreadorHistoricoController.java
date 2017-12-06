@@ -4,6 +4,7 @@ import com.apolo.webapp.ejb.RastreadorFacadeLocal;
 import com.apolo.webapp.ejb.RastreadorHistoricoFacadeLocal;
 import com.apolo.webapp.model.Rastreador;
 import com.apolo.webapp.model.RastreadorHistorico;
+import com.apolo.webapp.relatorio.Relatorio;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -160,5 +161,10 @@ public class RastreadorHistoricoController implements Serializable{
                 rastreadorHistoricoEJB.create(rastreadorHistorico);
         }    
     } 
+    
+    public void gerarRelatorio(){
+        Relatorio relatorio = new Relatorio();
+        relatorio.getRelatorio(listaRastreadorHistorico);
+    }
      
 }

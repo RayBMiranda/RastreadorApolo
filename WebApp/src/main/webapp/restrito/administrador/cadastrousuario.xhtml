@@ -24,13 +24,10 @@
                             </p:toolbar>
                             <p:fieldset legend="Dados Pessoais" style="margin-top: 20px;">
                                 <h:panelGrid columns="3" id="pgDados">
-                                    <div class="col s12 input-field">
-                                        <input id="input_text" type="text" data-length="10"/>
-                                        <p:outputLabel for="txtNome" value="Nome"/>
-                                        <p:inputText validatorMessage="Nome Inválido" id="txtNome"  value="#{UsuarioController.pessoa.nome}" required="true" >
-                                        </p:inputText>    
-                                        <p:message for="txtNome"/>
-                                    </div>
+                                    <p:outputLabel for="txtNome" value="Nome"/>
+                                    <p:inputText validatorMessage="Nome Inválido" id="txtNome"  value="#{UsuarioController.pessoa.nome}" required="true" >
+                                    </p:inputText>    
+                                    <p:message for="txtNome"/>
                                         
                                     <p:outputLabel for="txtSobrenome" value="Sobrenome"/>
                                     <p:inputText id="txtSobrenome" value="#{UsuarioController.pessoa.sobrenome}" required="true" />

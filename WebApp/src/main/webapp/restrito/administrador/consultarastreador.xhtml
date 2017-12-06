@@ -41,7 +41,7 @@
                         <p:column style="width:50px;" headerText="ID">
                             <h:outputText value="#{rastreador.idrastreador}"/>
                         </p:column>
-                        <p:column filterBy="#{rastreador.nome}" filterStyle="max-width: 200px; min-width: 200px;" filterMatchMode="contains" headerText="Nome">
+                        <p:column filterBy="#{rastreador.nome}" filterStyle="max-width: 155px; min-width: 155px;" filterMatchMode="contains" headerText="Nome">
                             <h:outputText value="#{rastreador.nome}"/>
                         </p:column>
                         <p:column headerText="Key" style="width: 150px; text-align: center;">
@@ -94,7 +94,6 @@
                             <p:commandButton value="Histórico" action="/restrito/usuario/historicorastreador.apolo?faces-redirect=true" >
                                 <f:setPropertyActionListener value="#{rastreador.idrastreador}" target="#{RastreadorHistoricoController.idRastreador}" /> 
                             </p:commandButton>  
-                            <p:commandButton value="exportar codigo" action="#{RastreadorController.download()}"/>
                         </p:column>
                         <p:ajax event="rowEdit" update=":frmRastreador:rastreadoresTable" listener="#{RastreadorController.editar(rastreador)}" />
                     </p:dataTable>

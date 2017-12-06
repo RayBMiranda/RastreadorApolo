@@ -27,8 +27,11 @@
                             
                         </p:commandButton>
                         </p:panelGrid>
-                        <p:outputLabel value="Sem Registros no Período"/>
+                        <p:outputLabel value="Sem Registros no Período" rendered="#{RastreadorHistoricoController.lineModelGeracao == null}"/>
                         <p:chart type="line" model="#{RastreadorHistoricoController.lineModelGeracao}" style="width:auto;min-width: 400px; height:400px" id="chart" rendered="#{RastreadorHistoricoController.lineModelGeracao != null}"/>
+                        <h:commandLink action="#{RastreadorHistoricoController.gerarRelatorio()}">
+                                <h:graphicImage style="margin-left: 5px; width: 50px; height: 50px;" url="../../resources/images/pdf-icon.png" />
+                        </h:commandLink >
                     </div>
                 </h:form>
                 

@@ -9,8 +9,11 @@
 #bottom {
     position: relative;
     background-color: #c2dfef;
-    padding: 5px;
-    margin: 10px 0px 0px 0px;
+    padding: 5px 0 0 0;
+    height: 100px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 #left {
@@ -45,13 +48,13 @@
 }
 
 #top a:link, #top a:visited {
-  color: #ffffff;
+  color: black;
   font-weight : bold;
   text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: #c6c6c6;
+  color: darkgrey;
   font-weight : bold;
   text-decoration : underline;
 }
@@ -60,7 +63,7 @@
 .noBorder td { border: 0 !important; }
 
 .transparentBackground tr,
-.transparentBackground td { background: transparent !important; padding-bottom: 10px;}
+.transparentBackground td {border: 0 !important; background: transparent !important; padding-bottom: 10px;}
 
 .boxCointainer{
     width: 100%;
@@ -81,4 +84,8 @@
     font-size: 13px;
 }
 
+.principal{
+    height: 100%;
+    min-height: 500px;
+}
 

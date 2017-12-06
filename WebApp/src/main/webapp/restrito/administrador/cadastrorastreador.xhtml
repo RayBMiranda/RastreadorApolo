@@ -8,6 +8,7 @@
     <body>
         <ui:composition template="./../../WEB-INF/templates/modelo.xhtml">
             <ui:define name="content">
+                <div class="principal">
                        <h:form id="frmCadastroRastreador">
                            <p:growl id="growl" autoUpdate="true" severity="info, fatal" showSummary="true" showDetail="true"/> 
                             <p:toolbar>
@@ -44,6 +45,7 @@
                             </h:panelGrid>
                             <!-- <p:commandButton icon="ui-icon-check" value="Cadastrar" update="pgDados, mensagem" actionListener="#{RastreadorController.registrar()}"/> -->
                         </h:form>
+                </div>    
                 <h:outputScript library="js" name="portuguesBRLocale.js" />
             </ui:define>
 
